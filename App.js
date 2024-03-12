@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import WorkoutForm from './components/workoutform';
+import Settings from './components/settings';
+import WorkoutList from './components/workoutlist'; 
+import { WorkoutProvider } from './components/workoutcontext';
 
-export default function App() {
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <WorkoutProvider>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="AddWorkoutTab" component={WorkoutForm} options={{ title: 'Add Workout' }} />
+          <Tab.Screen name="WorkoutListTab" component={WorkoutList} options={{ title: 'Past Workouts' }} />
+          <Tab.Screen name="SettingsTab" component={Settings} options={{ title: 'Settings' }} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </WorkoutProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
